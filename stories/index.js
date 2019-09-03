@@ -182,7 +182,7 @@ storiesOf("Appointment", module)
       mode="edit"
       name="Chen"
       interviewers={interviewers}
-      interviewer={3}
+      interviewer={2}
       onSave={action("onSave")}
       onCancel={action("onCancel")}
     />
