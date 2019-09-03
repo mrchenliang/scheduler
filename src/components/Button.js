@@ -3,5 +3,6 @@ import React from "react";
 import "components/Button.scss";
 
 export default function Button(props) {
-   return <></>;
+   return <button className="appointment__actions--button" >{props.children}</button>;
 }
+
