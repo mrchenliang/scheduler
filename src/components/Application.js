@@ -81,9 +81,9 @@ export default function Application(props) {
   const setInterviewers = interviewers =>
     setState(prev => ({ ...prev, interviewers }));
 
-  const getDays = axios.get("http://localhost:3001/api/days");
-  const getAppointments = axios.get("http://localhost:3001/api/appointments");
-  const getInterviewers = axios.get("http://localhost:3001/api/interviewers");
+  const getDays = axios.get("api/days");
+  const getAppointments = axios.get("/api/appointments");
+  const getInterviewers = axios.get("/api/interviewers");
 
   useEffect(() => {
     Promise.all([getDays, getAppointments, getInterviewers])
@@ -91,15 +91,19 @@ export default function Application(props) {
         setDays(res[0].data);
         setAppointments(res[1].data);
         setInterviewers(res[2].data);
-        console.log(res[0].data, res[1].data);
+
+        console.log(res[0].data, res[1].data, res[2].data);
       })
       .catch(err => console.log(err));
   }, []);
 
   const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
+    const interview = getInterview(state, appointment.interview);
     return <Appointment
-      key={appointment.id}
-      {...appointment}
+    key={appointment.id}
+    id={appointment.id}
+    time={appointment.time}
+    interview={interview}
     />
   });
 
