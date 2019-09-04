@@ -4,6 +4,8 @@ import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment/index.js";
 import axios from "axios";
+import { getAppointmentsForDay, getInterview } from '../helpers/selectors';
+
 
 // const days = [
 //   {
@@ -80,6 +82,7 @@ export default function Application(props) {
       .then(res => {
         setDays(res[0].data);
         setAppointment(res[1].data);
+        console.log(res[0].data,res[1].data)
       })
       .catch(err => console.log(err));
   }, []);
