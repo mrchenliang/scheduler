@@ -6,23 +6,23 @@ import Appointment from "components/Appointment/index.js";
 import axios from 'axios';
 
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0
-  }
-];
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0
+//   }
+// ];
 
 const appointments = [
   {
@@ -64,14 +64,22 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+
+  const setDay = day => setState(prev => ({ ...prev, day }));
+  const setDays = days => setState(prev => ({ ...prev, days }));
+  const setAppointment = appointment => setState(prev => ({ ...prev, appointment }));
+  const getDays = axios.get("http://localhost:3001/api/days");
+  const getAppointments = axios.get("http://localhost:3001/api/appointments")
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/days")
       .then(res => {
         setDays(res.data);
-        console.log(res.data);
       })
       .catch(err => console.log(err))
   }, []
@@ -86,7 +94,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} day={day} setDay={setDay} />
+          <DayList days={state.days} day={state.day} setDay={day => setDay(day)} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
