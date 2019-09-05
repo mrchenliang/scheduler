@@ -4,7 +4,7 @@ import "./styles.scss";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from './Form';
-import useVisualMode from "../../hooks/useVisualMode";
+import { useVisualMode } from '../../hooks/useVisualMode';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -21,13 +21,22 @@ const Appointment = props => {
         <h4 className="text--semi-bold">{props.time}</h4>
         <hr className="appointment__separator" />
       </header>
-      {mode === EMPTY && <Empty onAdd={props.onAdd} />}
-      {mode === SHOW && (
+      {mode === EMPTY &&
+        <Empty
+          onAdd={() => transition(CREATE)}
+        />}
+      {mode === SHOW &&
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
         />
-      )}
+      }
+      {mode === CREATE &&
+        <Form
+          interviewers={[]}
+          name="Hans"
+          onCancel = {back}
+        />}
     </div>
   );
 };
