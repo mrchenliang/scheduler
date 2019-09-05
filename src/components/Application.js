@@ -28,44 +28,44 @@ import {
 //   }
 // ];
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm"
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png"
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm"
-  },
-  {
-    id: 4,
-    time: "3pm"
-    // interview: {
-    //   student: "Chen Liang",
-    //   interviewer: {
-    //     id: 1,
-    //     name: "Mr. Roberts",
-    //     avatar: "https://i.imgur.com/LpaY82x.png"
-    //   }
-    // }
-  },
-  {
-    id: "last",
-    time: "4pm"
-  }
-];
+// const appointments = [
+//   {
+//     id: 1,
+//     time: "12pm"
+//   },
+//   {
+//     id: 2,
+//     time: "1pm",
+//     interview: {
+//       student: "Lydia Miller-Jones",
+//       interviewer: {
+//         id: 1,
+//         name: "Sylvia Palmer",
+//         avatar: "https://i.imgur.com/LpaY82x.png"
+//       }
+//     }
+//   },
+//   {
+//     id: 3,
+//     time: "2pm"
+//   },
+//   {
+//     id: 4,
+//     time: "3pm"
+//     // interview: {
+//     //   student: "Chen Liang",
+//     //   interviewer: {
+//     //     id: 1,
+//     //     name: "Mr. Roberts",
+//     //     avatar: "https://i.imgur.com/LpaY82x.png"
+//     //   }
+//     // }
+//   },
+//   {
+//     id: "last",
+//     time: "4pm"
+//   }
+// ];
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -99,11 +99,13 @@ export default function Application(props) {
 
   const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
     const interview = getInterview(state, appointment.interview);
+    const interviewer = getInterviewersForDay(state,appointment.interviewer);
     return <Appointment
     key={appointment.id}
     id={appointment.id}
     time={appointment.time}
     interview={interview}
+    interviewer={interviewer}
     />
   });
 
