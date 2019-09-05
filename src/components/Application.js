@@ -97,17 +97,21 @@ export default function Application(props) {
       .catch(err => console.log(err));
   }, []);
 
-  const appointmentList = getAppointmentsForDay(state, state.day).map(appointment => {
-    const interview = getInterview(state, appointment.interview);
-    const interviewer = getInterviewersForDay(state,appointment.interviewer);
-    return <Appointment
-    key={appointment.id}
-    id={appointment.id}
-    time={appointment.time}
-    interview={interview}
-    interviewer={interviewer}
-    />
-  });
+  const appointmentList = getAppointmentsForDay(state, state.day).map(
+    appointment => {
+      const interview = getInterview(state, appointment.interview);
+      const interviewer = getInterviewersForDay(state, appointment.interviewer);
+      return (
+        <Appointment
+          key={appointment.id}
+          id={appointment.id}
+          time={appointment.time}
+          interview={interview}
+          interviewer={interviewer}
+        />
+      );
+    }
+  );
 
   return (
     <main className="layout">
@@ -131,9 +135,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">
-        {appointmentList}
-      </section>
+      <section className="schedule">{appointmentList}</section>
     </main>
   );
 }
