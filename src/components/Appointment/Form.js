@@ -15,7 +15,7 @@ const Form = props => {
 
   function validate() {
     if (name === "") {
-      setError("Student name cannot be blank");
+      setError("Student Name is Empty");
       return;
     }
     setError("");

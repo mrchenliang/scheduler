@@ -25,7 +25,6 @@ const Appointment = props => {
       {console.log(props.interview)}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
-        
         <Show
           student={props.student}
           interviewer={props.interviewer.name}
