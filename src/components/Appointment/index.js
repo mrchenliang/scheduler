@@ -12,9 +12,14 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 
 const Appointment = props => {
-  const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY
-  );
+  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY)
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    return interview;
+  }
 
   return (
     <div>
@@ -31,7 +36,18 @@ const Appointment = props => {
         />
       )}
       {mode === CREATE && (
-        <Form interviewers={props.interviewers} name="Chen Liang" onCancel={back} />
+        <Form
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={(name, interviewer) => {
+            if (name && interviewer) {
+              props.bookInterview(props.id, save(name, interviewer));
+              transition(SHOW);
+            } else {
+              back();
+            }
+          }}
+        />
       )}
     </div>
   );

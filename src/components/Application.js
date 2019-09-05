@@ -111,7 +111,7 @@ export default function Application(props) {
       appointments: { ...appointments }
     });
 
-    return axios.put(`http://localhost:3001/api/appointments/${id}`,
+    return axios.put(`/api/appointments/${id}`,
       {interview})
       .then(res => {
         console.log(res);
