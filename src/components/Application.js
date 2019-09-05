@@ -118,6 +118,22 @@ export default function Application(props) {
       })
   }
 
+  const deleteInterview = id => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments: { ...appointments }
+    });
+    return axios.delete(`/api/appointments/${id}`)
+  }
+
 const interviewers = getInterviewersForDay(state, state.day);
 const days = getAppointmentsForDay(state, state.day);
 const appointmentList = days.map(appointment => {
@@ -129,6 +145,7 @@ const appointmentList = days.map(appointment => {
     interview={interview}
     interviewers={interviewers}
     bookInterview={bookInterview}
+    deleteInterview={deleteInterview}
   />
 });
 
@@ -154,7 +171,9 @@ const appointmentList = days.map(appointment => {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{appointmentList}</section>
+      <section className="schedule">{appointmentList}
+      <Appointment key="last" time="5pm" />
+    </section>
     </main>
   );
 }
