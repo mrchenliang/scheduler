@@ -7,7 +7,7 @@ import Form from "./Form";
 import Show from "./Show";
 import Status from "./Status";
 import Confirm from "./Confirm";
-import Error from './Error';
+import Error from "./Error";
 
 import { useVisualMode } from "../hooks/useVisualMode";
 
@@ -48,6 +48,9 @@ const Appointment = props => {
           onDelete={() => {
             transition(CONFIRM);
           }}
+          onEdit={() => {
+            transition(CREATE);
+          }}
         />
       )}
       {mode === CREATE && (
@@ -56,11 +59,14 @@ const Appointment = props => {
           onCancel={back}
           onSave={(name, interviewer) => {
             if (name && interviewer) {
-              transition(SAVING);
+              transition(SAVING, true);
               props
                 .bookInterview(props.id, save(name, interviewer))
                 .then(() => transition(SHOW))
-                .catch(err => console.log(err));
+                .catch(err => {
+                  console.log(err);
+                  transition(ERROR_SAVE, true);
+                });
             } else {
               back();
             }
@@ -71,7 +77,7 @@ const Appointment = props => {
       {mode === DELETING && <Status message="DELETING" />}
       {mode === CONFIRM && (
         <Confirm
-          message="Are you sure to delete this interview?"
+          message="Deleting This Interview?"
           onConfirm={() => {
             transition(DELETING);
             props
@@ -79,9 +85,30 @@ const Appointment = props => {
               .then(() => {
                 transition(EMPTY);
               })
-              .catch(err => console.log(err));
+              .catch(err => {
+                console.log(err);
+                transition(ERROR_DELETE, true);
+              });
           }}
           onCancel={back}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message="Something worong when you're tring to save this interview!"
+          onClose={() => {
+            back();
+            back();
+          }}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Something worong when you're tring to delete this interview!"
+          onClose={() => {
+            back();
+            back();
+          }}
         />
       )}
     </div>
