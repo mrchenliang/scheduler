@@ -1,9 +1,9 @@
 import { renderHook, act } from "react-hooks-testing-library";
 
-import {useVisualMode} from "hooks/useVisualMode";
+import {useVisualMode} from "./useVisualMode";
 
 const FIRST = "FIRST";
-const SECOND = "SECOND";
+const SECOND = "SECOND";ç
 const THIRD = "THIRD"
 
 test("useVisualMode should initialize with default value", () => {

@@ -22,15 +22,17 @@ const Appointment = props => {
         <h4 className="text--semi-bold">{props.time}</h4>
         <hr className="appointment__separator" />
       </header>
+      {console.log(props.interview)}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
+        
         <Show
-          student={props.interview.student}
-          interviewer={props.interview.interviewer}
-        />
+          student={props.student}
+          interviewer={props.interviewer.name}
+          />
       )}
       {mode === CREATE && (
-        <Form interviewers={[]} name="Chen Liang" onCancel={back} />
+        <Form interviewers={[]} name="" onCancel={back} />
       )}
     </div>
   );
