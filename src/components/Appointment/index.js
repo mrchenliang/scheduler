@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 
 import Header from "./Header";
@@ -32,14 +32,19 @@ const Appointment = props => {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+  useEffect(() => {
+    if (props.interview && mode === EMPTY) {
+      transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+      transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
 
   return (
-    <div>
-      <header className="appointment__time">
-        <h4 className="text--semi-bold">{props.time}</h4>
-        <hr className="appointment__separator" />
-      </header>
-
+    <article>
+      <Header className="appointment__time" />
+      {props.time}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
@@ -95,7 +100,7 @@ const Appointment = props => {
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message="Something worong when you're tring to save this interview!"
+          message="Something went wrong when saving the interview, try again"
           onClose={() => {
             back();
             back();
@@ -104,14 +109,14 @@ const Appointment = props => {
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message="Something worong when you're tring to delete this interview!"
+          message="Something went wrong when deleting the interview, try again!"
           onClose={() => {
             back();
             back();
           }}
         />
       )}
-    </div>
+    </article>
   );
 };
 

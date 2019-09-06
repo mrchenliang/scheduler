@@ -136,18 +136,6 @@ export default function Application(props) {
 
 const interviewers = getInterviewersForDay(state, state.day);
 const days = getAppointmentsForDay(state, state.day);
-const appointmentList = days.map(appointment => {
-  const interview = getInterview(state, appointment.interview);
-  return <Appointment
-    key={appointment.id}
-    id={appointment.id}
-    time={appointment.time}
-    interview={interview}
-    interviewers={interviewers}
-    bookInterview={bookInterview}
-    deleteInterview={deleteInterview}
-  />
-});
 
   return (
     <main className="layout">
@@ -171,7 +159,18 @@ const appointmentList = days.map(appointment => {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{appointmentList}
+      <section className="schedule">
+      {days.map(appointment => {
+  const interview = getInterview(state, appointment.interview);
+  return  <Appointment
+    key={appointment.id}
+    id={appointment.id}
+    time={appointment.time}
+    interview={interview}
+    interviewers={interviewers}
+    bookInterview={bookInterview}
+    deleteInterview={deleteInterview}
+  />})}
       <Appointment key="last" time="5pm" />
     </section>
     </main>
