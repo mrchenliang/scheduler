@@ -4,7 +4,7 @@ import Button from "components/Button";
 
 const Form = props => {
   const [name, setName] = useState(props.name || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [interviewer, setInterviewer] = useState(props.value || null);
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -40,7 +40,7 @@ const Form = props => {
         <InterviewerList
           interviewers={props.interviewers}
           value={interviewer}
-          onChange={setInterviewer}
+          onChange={event => setInterviewer(event)}
         />
       </section>
       <section className="appointment__card-right">

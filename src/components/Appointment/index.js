@@ -16,6 +16,7 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
+const UPDATE = "UPDATE";
 const CONFIRM = "CONFIRM";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
@@ -42,11 +43,12 @@ const Appointment = props => {
   }, [props.interview, transition, mode]);
 
   return (
-    <article>
-      <Header className="appointment__time" />
-      {props.time}
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      {mode === SHOW && (
+    <article className="appointment">
+      <Header time={props.time} />
+      {(mode === EMPTY || mode === SHOW) && !props.interview && (
+        <Empty onAdd={() => transition(CREATE)} />
+      )}
+      {(mode === SHOW || mode === EMPTY) && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
@@ -54,7 +56,7 @@ const Appointment = props => {
             transition(CONFIRM);
           }}
           onEdit={() => {
-            transition(CREATE);
+            transition(UPDATE);
           }}
         />
       )}
@@ -78,6 +80,26 @@ const Appointment = props => {
           }}
         />
       )}
+        {mode === UPDATE &&
+        <Form
+          name={props.interview.student}
+          value={props.interview.interviewer.id}
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={(name, interviewer) => {
+            if (name && interviewer) {
+              transition(SAVING, true);
+              props.bookInterview(props.id, save(name, interviewer), props.day)
+                .then(() => transition(SHOW))
+                .catch(err => {
+                  console.log(err);
+                  transition(ERROR_SAVE, true);
+                })
+            } else {
+              back();
+            }
+          }}
+        />}
       {mode === SAVING && <Status message="SAVING" />}
       {mode === DELETING && <Status message="DELETING" />}
       {mode === CONFIRM && (
@@ -100,7 +122,7 @@ const Appointment = props => {
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message="Something went wrong when saving the interview, try again"
+          message="Something went wrong when saving the interview, try again!"
           onClose={() => {
             back();
             back();
