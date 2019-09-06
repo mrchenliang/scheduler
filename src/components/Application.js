@@ -50,6 +50,7 @@ export default function Application(props) {
             <Appointment
               key={appointment.id}
               {...appointment}
+              day={state.day}
               interview={interview}
               interviewers={interviewers}
               bookInterview={bookInterview}

@@ -68,7 +68,7 @@ const Appointment = props => {
             if (name && interviewer) {
               transition(SAVING, true);
               props
-                .bookInterview(props.id, save(name, interviewer))
+                .bookInterview(props.id, save(name, interviewer), props.day)
                 .then(() => transition(SHOW))
                 .catch(err => {
                   console.log(err);
@@ -80,7 +80,7 @@ const Appointment = props => {
           }}
         />
       )}
-        {mode === UPDATE &&
+              {mode === UPDATE &&
         <Form
           name={props.interview.student}
           value={props.interview.interviewer.id}
