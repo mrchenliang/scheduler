@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 
 // websockets
@@ -23,9 +23,6 @@ const reducer = (state, action) => {
       };
 
     case SET_INTERVIEW: {
-      const dayObj = state.days.find(eachDay => eachDay.name === day);
-      const dayIndex = dayObj.id - 1;
-      dayObj.spots = Number(dayObj.spots) + (interview ? -1 : 1);
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -34,12 +31,9 @@ const reducer = (state, action) => {
         ...state.appointments,
         [id]: appointment
       };
-      const days = state.days;
-      days[dayIndex] = dayObj;
       return {
         ...state,
-        appointments: { ...appointments },
-        days
+        appointments: { ...appointments }
       };
     }
 
@@ -56,7 +50,6 @@ export const useApplicationData = () => {
     days: [],
     appointments: {}
   });
-
   const setDay = day => dispatch({ type: SET_DAY, day });
 
   const getDays = axios.get("/api/days");
@@ -83,9 +76,9 @@ export const useApplicationData = () => {
     });
   };
 
-  const deleteInterview = id => {
+  const deleteInterview = (id) => {
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      dispatch({ type: SET_INTERVIEW, id })
+      dispatch({ type: SET_INTERVIEW, id });
     });
   };
 

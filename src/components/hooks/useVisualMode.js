@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useVisualMode(value) {
+export const useVisualMode = value => {
   const [mode, setMode] = useState(value);
   const [history, setHistory] = useState([value]);
 
@@ -13,7 +13,6 @@ export function useVisualMode(value) {
     }
     setMode(value2);
   };
-
   const back = () => {
     let backHistory = [...history]
     history.pop();

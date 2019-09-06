@@ -45,10 +45,10 @@ const Appointment = props => {
   return (
     <article className="appointment">
       <Header time={props.time} />
-      {(mode === EMPTY || mode === SHOW) && !props.interview && (
+      {mode === EMPTY && 
         <Empty onAdd={() => transition(CREATE)} />
-      )}
-      {(mode === SHOW || mode === EMPTY) && props.interview && (
+      }
+      {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
@@ -106,10 +106,11 @@ const Appointment = props => {
         <Confirm
           message="Deleting This Interview?"
           onConfirm={() => {
-            transition(DELETING);
+            transition(DELETING, true);
             props
               .deleteInterview(props.id)
               .then(() => {
+                console.log('here');
                 transition(EMPTY);
               })
               .catch(err => {
