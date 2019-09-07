@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import { getSpotsForDay } from "../../helpers/selectors";
+require("dotenv").config();
 
 export const SET_DAY = "SET_DAY";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
@@ -75,6 +76,22 @@ export const useApplicationData = () => {
       })
       .catch(err => console.log(err));
   }, []);
+  
+  const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+  webSocket.onopen = function (event) {
+    console.log("Began listening for updates from the scheduler-api server.")
+  };
+
+  webSocket.onmessage = function (event) {
+    event = JSON.parse(event.data);
+
+    if (event.type === SET_INTERVIEW) {
+      dispatch({ ...event });
+    } else {
+      console.log("Event details came from the server but were never handled:", event);
+    }
+  }
 
   const bookInterview = (id, interview, day) => {
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
