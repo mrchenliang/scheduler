@@ -74,24 +74,29 @@ export const useApplicationData = () => {
           interviewers: res[2].data
         });
       })
-      .catch(err => console.log(err));
+      .catch(error => {
+        throw error;
+      });
+
+    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    webSocket.onopen = function(event) {
+      console.log("Began listening for updates from the scheduler-api server.");
+    };
+
+    webSocket.onmessage = function(event) {
+      event = JSON.parse(event.data);
+
+      if (event.type === SET_INTERVIEW) {
+        dispatch({ ...event });
+      } else {
+        console.log(
+          "Event details came from the server but were never handled:",
+          event
+        );
+      }
+    };
   }, []);
-  
-  const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-
-  webSocket.onopen = function (event) {
-    console.log("Began listening for updates from the scheduler-api server.")
-  };
-
-  webSocket.onmessage = function (event) {
-    event = JSON.parse(event.data);
-
-    if (event.type === SET_INTERVIEW) {
-      dispatch({ ...event });
-    } else {
-      console.log("Event details came from the server but were never handled:", event);
-    }
-  }
 
   const bookInterview = (id, interview, day) => {
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
