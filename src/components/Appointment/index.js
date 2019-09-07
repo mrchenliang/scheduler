@@ -10,13 +10,12 @@ import Confirm from "./Confirm";
 import Error from "./Error";
 
 import { useVisualMode } from "../hooks/useVisualMode";
-
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const UPDATE = "UPDATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
-const UPDATE = "UPDATE";
 const CONFIRM = "CONFIRM";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
@@ -33,6 +32,7 @@ const Appointment = props => {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
   useEffect(() => {
     if (props.interview && mode === EMPTY) {
       transition(SHOW);
@@ -42,12 +42,11 @@ const Appointment = props => {
     }
   }, [props.interview, transition, mode]);
 
+
   return (
     <article className="appointment">
       <Header time={props.time} />
-      {mode === EMPTY && 
-        <Empty onAdd={() => transition(CREATE)} />
-      }
+      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}
@@ -104,13 +103,12 @@ const Appointment = props => {
       {mode === DELETING && <Status message="DELETING" />}
       {mode === CONFIRM && (
         <Confirm
-          message="Deleting This Interview?"
+          message="Delete This Interview?"
           onConfirm={() => {
             transition(DELETING, true);
             props
-              .deleteInterview(props.id)
+              .cancelInterview(props.id, props.day)
               .then(() => {
-                console.log('here');
                 transition(EMPTY);
               })
               .catch(err => {

@@ -1,4 +1,4 @@
-import {getSpotsForDay} from '../helpers/selectors';
+import { getSpotsForDay } from "../helpers/selectors";
 
 export const SET_DAY = "SET_DAY";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
@@ -44,4 +44,4 @@ export const reducer = (state, action) => {
         `Tried to reduce with unsupported action type: ${action.type}`
       );
   }
-}; 
+};
