@@ -35,7 +35,7 @@ describe("Form", () => {
 
   it("validates that the student name is not blank", () => {
     /* 1. validation is shown */
-    expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
+    expect(getByText(/Student Name is Empty/i)).toBeInTheDocument();
   
     /* 2. onSave is not called */
     expect(onSave).not.toHaveBeenCalled();
@@ -43,7 +43,7 @@ describe("Form", () => {
   
   it("calls onSave function when the name is defined", () => {
     /* 3. validation is not shown */
-    expect(queryByText(/student name cannot be blank/i)).toBeNull();
+    expect(queryByText(/Student Name is Empty/i)).toBeNull();
   
     /* 4. onSave is called once*/
     expect(onSave).toHaveBeenCalledTimes(1);
