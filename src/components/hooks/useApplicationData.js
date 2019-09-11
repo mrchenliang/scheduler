@@ -7,9 +7,6 @@ export const SET_DAY = "SET_DAY";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 export const SET_INTERVIEW = "SET_INTERVIEW";
 
-// websockets
-const ws = new WebSocket("ws://localhost:3001");
-
 export const reducer = (state, action) => {
   const { day, days, appointments, interviewers, id, interview } = action;
   switch (action.type) {

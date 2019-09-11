@@ -53,8 +53,12 @@ export default function Application(props) {
               day={state.day}
               interview={interview}
               interviewers={interviewers}
-              bookInterview={bookInterview}
-              cancelInterview={cancelInterview}
+              bookInterview={(id, interview) => bookInterview(id, interview).catch(err => {
+                throw err
+              })}
+              cancelInterview={id => cancelInterview(id).catch(err => {
+                throw err
+              })}
             />
           );
         })}
