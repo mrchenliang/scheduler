@@ -1,13 +1,11 @@
 import React from "react";
 
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent, waitForElement } from "@testing-library/react";
 
-import Appointment from "components/Appointment/index";
+import Application from "../Application";
 
 afterEach(cleanup);
-
 describe("Appointment", () => {
-  it("renders without crashing", () => {
-    render(<Appointment />);
+  it("defaults to Monday and changes the schedule when a new day is selected", () => {
   });
 });
