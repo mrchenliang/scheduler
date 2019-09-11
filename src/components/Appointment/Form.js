@@ -4,7 +4,9 @@ import Button from "components/Button";
 
 const Form = props => {
   const [name, setName] = useState(props.name || "");
-  const [interviewer, setInterviewer] = useState(props.value || null);
+  const [interviewer, setInterviewer] = useState(
+    props.interviewer ? props.interviewer.id : null
+  );
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -48,7 +50,7 @@ const Form = props => {
           <Button danger onClick={reset}>
             Cancel
           </Button>
-          <Button confirm onClick={() => validate()}>
+          <Button confirm onClick={validate}>
             Save
           </Button>
         </section>
