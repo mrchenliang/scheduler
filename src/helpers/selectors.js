@@ -54,22 +54,3 @@ export const getDayFromAppointmentId = (state, id) => {
     }
   }
 };
-
-export const getSpotsForDay = (state, appointments, day) => {
-  let spots = 0;
-  for (const eachDay of state.days) {
-    if (eachDay.name === day) {
-      spots = eachDay.appointments.length;
-    }
-  }
-
-  for (const id in appointments) {
-    if (
-      getDayFromAppointmentId(state, id) === day &&
-      appointments[id].interview
-    ) {
-      spots--;
-    }
-  }
-  return spots;
-};

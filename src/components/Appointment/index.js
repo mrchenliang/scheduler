@@ -37,7 +37,7 @@ const Appointment = props => {
     if (props.interview && mode === EMPTY) {
       transition(SHOW);
     }
-    if (props.interview === null && mode === SHOW) {
+    if (!props.interview && mode === SHOW) {
       transition(EMPTY);
     }
   }, [props.interview, transition, mode]);
