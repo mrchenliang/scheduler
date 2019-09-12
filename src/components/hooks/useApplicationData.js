@@ -77,10 +77,6 @@ export const useApplicationData = () => {
 
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    webSocket.onopen = function(event) {
-      console.log("Began listening for updates from the scheduler-api server.");
-    };
-
     webSocket.onmessage = function(event) {
       event = JSON.parse(event.data);
 
