@@ -10,7 +10,7 @@ import {
 } from "../../helpers/selectors";
 require("dotenv").config();
 
-const ws = new WebSocket("wss://schedulerapplication-api.herokuapp.com/");
+const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
 export const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
