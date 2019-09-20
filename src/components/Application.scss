@@ -36,3 +36,15 @@
   padding: 0 $spacing;
   width: 100%;
 }
+.created-by {
+  color: rgb(136,143,151);
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5em;
+
+  &:hover {
+    color: #ee5253;
+    cursor: pointer;
+  }
+}

@@ -29,6 +29,7 @@ export default function Application(props) {
           src="images/logo.png"
           alt="Interview Scheduler"
         />
+        <a className="created-by" href="http://chenliang.ca">Built By: Chen Liang</a>
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
